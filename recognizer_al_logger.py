@@ -3,6 +3,14 @@ import serial
 import serial.tools.list_ports
 import time
 import io
+import os
+
+# FOLDER STRUCTURE VERIFICATION
+audio_file_directory = "recorded_files"
+if not os.path.exists(audio_file_directory):
+    os.makedirs(recorded_files)
+# else:
+#     print "folder exists"
 
 time.sleep(1)
 
@@ -13,7 +21,7 @@ ports_list = list(serial.tools.list_ports.comports())
 for port in ports_list:
     # print port
     # if "ttyACM" in port[1]:  #for pi
-    if "Arduino" in port.description: #for ubuntu
+    if "Arduino" in port[1] or "ttyACM" in port[1]: 
         arduino_serial_port = port[0]
 
 print ("Found and Arduino attached to computer: " + str(arduino_serial_port))
@@ -50,6 +58,8 @@ finally:
 lame_msg_c = 0
 file_counter = 0
 
+serial_trig_val = 6
+
 def main():
     try:
         while True:
@@ -60,13 +70,14 @@ def main():
                 if not incoming_trig:
                     lame_msg_c += 1
                     if(lame_msg_c == 1):
-                        print "\nWaiting for Serial trigger"
+                        print "\nWaiting for Serial trigger..."
                     continue
 
-                print incoming_trig
+                # print incoming_trig
                 
                 # If it receives a signal from Arduino the proceed
-                if int(incoming_trig) == 6:
+                global serial_trig_val
+                if int(incoming_trig) == serial_trig_val:
                     print "Received trigger and thus starting listener.."
 
                     time.sleep(2)
@@ -82,7 +93,7 @@ def main():
                     # write audio to a WAV file
                     print("Saving audio file...") 
                     global file_counter
-                    with open("recorded_files/"+str(file_counter)+".wav", "wb") as f:
+                    with open(audio_file_directory+"/"+str(file_counter)+".wav", "wb") as f:
                         f.write(audio.get_wav_data())
                     print("Saved :)")
                     file_counter += 1
