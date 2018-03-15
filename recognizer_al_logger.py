@@ -5,10 +5,12 @@ import time
 import io
 import os
 import datetime
+import json
 
 # FOLDER STRUCTURE VERIFICATION
 audio_file_directory = "recorded_files"
 audio_transcription_directory = "sentences"
+jsonfile = 'data.json'
 
 if not os.path.exists(audio_file_directory):
     print ("\nFolder '" + + audio_file_directory + "' doesn't exist. Hence creating it")
@@ -78,6 +80,10 @@ finally:
     if proceed:
         print("Serial port opened at: " + str(ser.name) + ", with baudrate: " + str(ser.baudrate)) 
 
+# CREATING json FILE FORMAT
+transcribed_sentence = ""
+transcript_data={}
+transcript_data['strings'] = []
 
 # CHECK FOR SERIAL TRIGGER TO START LISTENING AND ALL THE BULLSHIT ROUTINES FOLLOWING THAT
 lame_msg_c = 0
@@ -123,6 +129,13 @@ def main():
                         f.write(audio.get_wav_data())
                     print("Saved :)")
 
+                    # UPLOAD IT TO SOUND-CLOUD
+                    # ------------------------
+                    #   TO BE DONE......
+                    # ------------------------
+
+                    global transcribed_sentence
+
                     # --------- Recognize speech using Google Speech Recognition
                     # time.sleep(2)
                     # try:
@@ -164,8 +177,15 @@ def main():
                     except sr.RequestError as e:
                         print("** Sphinx error; {0}".format(e))
                         exit()
+                    
+                    # SAVING DATA TO json file
+                    transcript_data['strings'].append({
+                        'sentence':transcribed_sentence
+                    })
+                    with open(audio_transcription_directory+'/data.json', 'w') as outfile:  
+                        outfile.write(json.dumps(transcript_data, indent=4))
                 else:
-                    print("** Serial trigger didn't match the reqd. trig. " + "6")
+                    print("** Serial trigger didn't match the reqd. trig. " + str(serial_trig_val))
                     exit()
             else:
                 print ("** Serial port was not opened")
