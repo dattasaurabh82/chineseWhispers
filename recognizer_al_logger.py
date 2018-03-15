@@ -4,6 +4,7 @@ import serial.tools.list_ports
 import time
 import io
 import os
+import datetime
 
 # FOLDER STRUCTURE VERIFICATION
 audio_file_directory = "recorded_files"
@@ -80,7 +81,6 @@ finally:
 
 # CHECK FOR SERIAL TRIGGER TO START LISTENING AND ALL THE BULLSHIT ROUTINES FOLLOWING THAT
 lame_msg_c = 0
-file_counter = 0
 
 serial_trig_val = 6
 
@@ -115,12 +115,13 @@ def main():
                     time.sleep(2)
 
                     # write audio to a WAV file
-                    print("Saving audio file...") 
-                    global file_counter
-                    with open(audio_file_directory+"/"+str(file_counter)+".wav", "wb") as f:
+                    print("Saving audio file...")
+                    # AUDIO FILE NAME CREATION WITH DATE TIME FOR SAVING 
+                    now = datetime.datetime.now()
+                    file_name = now.strftime("%Y-%m-%d|%H:%M")
+                    with open(audio_file_directory+"/"+file_name+".wav", "wb") as f:
                         f.write(audio.get_wav_data())
                     print("Saved :)")
-                    file_counter += 1
 
                     # --------- Recognize speech using Google Speech Recognition
                     # time.sleep(2)
