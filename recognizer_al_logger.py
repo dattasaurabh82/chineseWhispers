@@ -7,10 +7,34 @@ import os
 
 # FOLDER STRUCTURE VERIFICATION
 audio_file_directory = "recorded_files"
+audio_transcription_directory = "sentences"
+
 if not os.path.exists(audio_file_directory):
-    os.makedirs(recorded_files)
-# else:
-#     print "folder exists"
+    print ("\nFolder '" + + audio_file_directory + "' doesn't exist. Hence creating it")
+    time.sleep(1)
+    try:
+        os.makedirs(audio_file_directory)
+    except:
+        print ("Some errors in creating audio files directory")
+    finally:
+        time.sleep(1)
+        print ("Created '" + audio_file_directory + "'\n")
+else:
+    print ("\nFolder '" + audio_file_directory + "' exists. So moving on.")
+
+if not os.path.exists(audio_transcription_directory):
+    print ("\nFolder '" + audio_file_directory + "' doesn't exist. Hence creating it")
+    time.sleep(1)
+    try:
+        os.makedirs(audio_transcription_directory)
+    except:
+        print ("Some errors in creating transcribed sentences list directory")
+    finally:
+        time.sleep(1)
+        print ("Created '" + audio_transcription_directory + "'\n")
+else:
+    print ("Folder '" + audio_transcription_directory + "' exists. So moving on.\n")
+
 
 time.sleep(1)
 
