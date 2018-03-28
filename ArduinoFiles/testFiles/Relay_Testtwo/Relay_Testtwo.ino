@@ -35,37 +35,43 @@ void setup(){
   pinMode(swThreePin, INPUT_PULLUP);
   pinMode(swFourPin, INPUT_PULLUP);
 
-  pinMode(pOnePin, OUTPUT); 
-  digitalWrite(pOnePin, HIGH);// LOW
-  pinMode(pTwoPin, OUTPUT); 
-  digitalWrite(pTwoPin, HIGH);// LOW
-  pinMode(pThreePin, OUTPUT); 
-  digitalWrite(pThreePin, HIGH);// LOW
+  //  pinMode(pOnePin, OUTPUT); 
+  //  digitalWrite(pOnePin, HIGH);// LOW
+  //  pinMode(pTwoPin, OUTPUT); 
+  //  digitalWrite(pTwoPin, HIGH);// LOW
+  //  pinMode(pThreePin, OUTPUT); 
+  //  digitalWrite(pThreePin, HIGH);// LOW
   pinMode(pFourPin, OUTPUT); 
   digitalWrite(pFourPin, LOW);// HIGH
-
-  pinMode(rOnePin, OUTPUT); 
-  digitalWrite(rOnePin, HIGH);// LOW
-  pinMode(rTwoPin, OUTPUT); 
-  digitalWrite(rTwoPin, HIGH);// LOW
-  pinMode(rThreePin, OUTPUT); 
-  digitalWrite(rThreePin, HIGH);// LOW
+  //
+  //  pinMode(rOnePin, OUTPUT); 
+  //  digitalWrite(rOnePin, HIGH);// LOW
+  //  pinMode(rTwoPin, OUTPUT); 
+  //  digitalWrite(rTwoPin, HIGH);// LOW
+  //  pinMode(rThreePin, OUTPUT); 
+  //  digitalWrite(rThreePin, HIGH);// LOW
   pinMode(rFourPin, OUTPUT); 
   digitalWrite(rFourPin, LOW);// HIGH
-
+  //
   Serial.begin(9600);
-  Serial3.begin(9600);
-
+  //  Serial3.begin(9600);
+  //
   delay(4000); 
-
+  //
   digitalWrite(rFourPin, HIGH);
-  delay(5000);
+  delay(9000);
   digitalWrite(rFourPin, LOW);
-  delay(2000);
+  delay(3000);
   digitalWrite(pFourPin, HIGH);
   delay(120);
   digitalWrite(pFourPin, LOW);
 
+  //  digitalWrite(rThreePin, LOW);
+  //  delay(9000);
+  //  digitalWrite(rThreePin, HIGH);
+  //  delay(5000);
+  //  digitalWrite(pThreePin, LOW);
+  //  delay(120);
 }
 
 
@@ -76,14 +82,19 @@ void loop(){
   swThreeState = digitalRead(swThreePin);
   swFourState = digitalRead(swFourPin);
 
-  Serial.println("switch staetes");
-  Serial.println(swOneState);
-  Serial.println(swTwoState); 
-  Serial.println(swThreeState); 
-  Serial.println(swFourState);
-  Serial.println("-----------");
-  Serial.println();
+  //  Serial.println("switch staetes");
+  //  Serial.println(swOneState);
+  //  Serial.println(swTwoState); 
+  //  Serial.println(swThreeState); 
+  //  Serial.println(swFourState);
+  //  Serial.println("-----------");
+  //  Serial.println();
 }
+
+
+
+
+
 
 
 
