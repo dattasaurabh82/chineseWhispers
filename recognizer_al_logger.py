@@ -12,6 +12,19 @@ audio_file_directory = "recorded_files"
 audio_transcription_directory = "sentences"
 jsonfile = 'data.json'
 
+
+credentials_json_file = 'Leo-Dolls-cdab5e3e2bbf.json'
+GOOGLE_CLOUD_SPEECH_CREDENTIALS = r""" 
+"""
+global GOOGLE_CLOUD_SPEECH_CREDENTIALS
+
+
+
+with open(credentials_json_file) as json_file:
+    json_data = json.load(json_file)
+    GOOGLE_CLOUD_SPEECH_CREDENTIALS = json.dumps(json_data).decode("utf-8")
+
+
 if not os.path.exists(audio_file_directory):
     print ("\nFolder '" + + audio_file_directory + "' doesn't exist. Hence creating it")
     time.sleep(1)
@@ -159,26 +172,45 @@ def main():
                     #     exit()
 
 
-                    # --------- Recognize speech using Sphinx
+                    # --------- Recognize speech using Google cloud speech
+                    time.sleep(2)
                     try:
-                        time.sleep(2)
                         print("Recognizing...")
-                        # transcribed_sentence = r.recognize_sphinx(audio, "zh-CN")
-                        transcribed_sentence = r.recognize_sphinx(audio, "en-US")
+                        #transcribed_sentence = r.recognize_google(audio, "zh-CN")
+                        transcribed_sentence = r.recognize_google_cloud(audio, credentials_json=GOOGLE_CLOUD_SPEECH_CREDENTIALS)
                         print("Recognized :)")
                         time.sleep(2)
                         print("\nIt heard: -->\"" + transcribed_sentence + "\"")
 
-                        lame_msg_c = 0
-
+                        lame_msg_c = 0                        
+                        # print("Google Cloud Speech thinks you said " + r.recognize_google_cloud(audio, credentials_json=GOOGLE_CLOUD_SPEECH_CREDENTIALS))
                     except sr.UnknownValueError:
                         print("** Could not understand audio")
                         exit()
                     except sr.RequestError as e:
-                        print("** Sphinx error; {0}".format(e))
+                        print("** Google Cloud Speech service request error: {0}".format(e))
                         exit()
+
+                    # --------- Recognize speech using Sphinx
+                    # try:
+                    #     time.sleep(2)
+                    #     print("Recognizing...")
+                    #     # transcribed_sentence = r.recognize_sphinx(audio, "zh-CN")
+                    #     transcribed_sentence = r.recognize_sphinx(audio, "en-US")
+                    #     print("Recognized :)")
+                    #     time.sleep(2)
+                    #     print("\nIt heard: -->\"" + transcribed_sentence + "\"")
+
+                    #     lame_msg_c = 0
+
+                    # except sr.UnknownValueError:
+                    #     print("** Could not understand audio")
+                    #     exit()
+                    # except sr.RequestError as e:
+                    #     print("** Sphinx error; {0}".format(e))
+                    #     exit()
                     
-                    # SAVING DATA TO json file
+                    # ------------------- SAVING DATA TO json file
                     transcript_data['strings'].append({
                         'sentence':transcribed_sentence
                     })
